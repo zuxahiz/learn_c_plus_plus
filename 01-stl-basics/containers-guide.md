@@ -91,6 +91,81 @@ int last = dq[dq.size() - 1];
 - 内存不连续，但分段连续
 - 比vector稍慢，但更灵活
 
+### Forward_list（单向链表）
+```cpp
+#include <forward_list>
+using namespace std;
+
+// 创建和初始化
+forward_list<int> fl1;                    // 空单向链表
+forward_list<int> fl2 = {1, 2, 3, 4, 5}; // 列表初始化
+forward_list<int> fl3(5, 10);            // 5个元素，值为10
+
+// 前端操作
+fl1.push_front(10);                       // 前端添加
+fl1.push_front(20);                       // 前端添加
+fl1.pop_front();                          // 前端删除
+
+// 插入和删除操作（需要使用迭代器）
+auto it = fl2.begin();
+fl2.insert_after(it, 99);                // 在it之后插入
+fl2.erase_after(it);                     // 删除it之后的元素
+
+// 访问元素（只能访问第一个元素）
+int front = fl2.front();                  // 第一个元素
+
+// 遍历
+cout << "Forward list: ";
+for (auto it = fl2.begin(); it != fl2.end(); ++it) {
+    cout << *it << " ";
+}
+cout << endl;
+
+// 使用范围for循环
+for (const auto& val : fl2) {
+    cout << val << " ";
+}
+cout << endl;
+
+// 特有操作
+forward_list<int> fl4 = {6, 7, 8};
+fl2.splice_after(fl2.begin(), fl4);      // 拼接链表
+fl2.remove(3);                           // 删除所有值为3的元素
+fl2.unique();                            // 删除连续重复元素
+fl2.sort();                              // 排序
+fl2.reverse();                           // 反转
+```
+
+**特性**:
+- 单向链表，只能向前遍历
+- 内存开销比list小（没有反向指针）
+- 只支持前向迭代器
+- 不支持size()操作（O(1)时间复杂度）
+- 插入删除操作需要知道前一个位置
+- 适合内存受限且只需单向遍历的场景
+
+**与list的比较**:
+```cpp
+// list vs forward_list 特性对比
+list<int> lst = {1, 2, 3};
+forward_list<int> fl = {1, 2, 3};
+
+// list支持的操作
+lst.push_back(4);        // ✓ 支持
+lst.pop_back();          // ✓ 支持
+cout << lst.size();      // ✓ 支持
+auto it = lst.rbegin();  // ✓ 支持反向迭代器
+
+// forward_list不支持的操作
+// fl.push_back(4);      // ✗ 不支持
+// fl.pop_back();        // ✗ 不支持
+// cout << fl.size();    // ✗ 不支持（可用distance计算）
+// auto it = fl.rbegin(); // ✗ 不支持反向迭代器
+
+// 计算forward_list大小（如果需要）
+size_t fl_size = distance(fl.begin(), fl.end());
+```
+
 ### List（双向链表）
 ```cpp
 #include <list>

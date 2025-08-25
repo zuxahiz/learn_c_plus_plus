@@ -16,6 +16,7 @@
 - [堆实现](./heap-implementation.cpp)
 - [哈希表实现](./hash-table-implementation.cpp)
 - [图实现](./graph-implementation.cpp)
+- [高级数据结构演示](./advanced-structures-demo.cpp) - forward_list、最大堆、最小堆、红黑树、AVL树
 
 ### 3. 算法实现
 - [排序算法](./sorting-algorithms.cpp)
